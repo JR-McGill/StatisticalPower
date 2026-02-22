@@ -1,0 +1,12 @@
+project:
+  type: website
+  output-dir: docs
+  resources:
+  - shinylive-sw.js
+  
+website:  
+  repo-url: https://github.com/JR-Mcgill/Power
+  repo-actions: [edit, issue]
+  title: "Power"
+
+
