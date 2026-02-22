@@ -1,5 +1,6 @@
 ---
 title: "Power Analysis"
+subtitle: "Use right or down arrow keys to advance"
 format: 
   revealjs:
     height: 800
