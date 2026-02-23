@@ -9,6 +9,9 @@ filters:
 slide-number: true
 ---
 
+
+## Research Question
+
 ```{=html}
 <!---- 
 ######################################################################
@@ -54,26 +57,6 @@ theme_minimalism <- function(){
 }
 ```
 
-
-```{r}
-library(ggplot2)
-library(shiny)
-library(plotly)
-
-theme_minimalism <- function(){
-  theme_minimal() + # ggplot's minimal theme hides many unnecessary features of plot
-  theme(            # make modifications to the theme
-    panel.grid.major.y=element_blank(),   # hide major grid for y axis
-    panel.grid.minor.y=element_blank(),   # hide minor grid for y axis
-    panel.grid.major.x=element_blank(),   # hide major grid for x axis
-    panel.grid.minor.x=element_blank(),   # hide minor grid for x axis
-    text=element_text(size=14),           # font aesthetics 
-    axis.text=element_text(size=12),
-    axis.title=element_text(size=14,face="bold"))
-}
-```
-
-## Research Question
 
 ::: {.fragment .fade-in fragment-index="1"}
 Let's say we're interested in studying the effect of meditation on well-being.
