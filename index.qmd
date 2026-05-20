@@ -40,7 +40,7 @@ slide-number: true
 ```{r}
 library(ggplot2)
 library(shiny)
-library(plotly)
+#library(plotly)
 library(tibble)
 library(munsell)
 
@@ -85,7 +85,7 @@ plot1 <- ggplot(data=data.frame(x=c(35:65)),aes(x)) +
   xlab("Well-Being Score")+
   scale_colour_manual("Legend",values = c("#b2df8a")) +
   theme_minimalism() 
-ggplotly(plot1) |> layout(legend = list(x = 0.9, y = 0.9))
+plot1
 ```
 :::
 
@@ -102,7 +102,7 @@ Let's say this sampling distribution has a mean score of 50 and a standard error
 ::: r-stack
 ```{r}
 #| fig-align: center
-ggplotly(plot1 +
+plot1 +
     stat_function(fun=dnorm,
                   args=list(mean=50.3, sd=5),
                   geom="area", 
@@ -111,7 +111,7 @@ ggplotly(plot1 +
                   fill=NA, 
                   aes(color="Alternative Distribution"), 
                   xlim=c(35,65)) +
-    scale_colour_manual("Legend",values = c("#a6cee3","#b2df8a"))) |> layout(legend = list(x = 0.9, y = 0.9))
+    scale_colour_manual("Legend",values = c("#a6cee3","#b2df8a"))
 ```
 :::
 
@@ -124,7 +124,7 @@ If the null hypothesis (H~0~) were true (If meditation had no effect on well-bei
 ::: r-stack
 ```{r}
 #| fig-align: center
-ggplotly(plot2 <- ggplot(data=data.frame(x=c(35:75)),aes(x)) +
+plot2 <- ggplot(data=data.frame(x=c(35:75)),aes(x)) +
   stat_function(fun=dnorm,
                 args=list(mean=50, sd=5),
                 geom="area", 
@@ -147,7 +147,8 @@ ggplotly(plot2 <- ggplot(data=data.frame(x=c(35:75)),aes(x)) +
   ylab("")+
   xlab("Well-Being Score")+
   scale_colour_manual("Legend",values = c("#a6cee3","#b2df8a")) +
-  theme_minimalism()) |> layout(legend = list(x = 0.9, y = 0.9))
+  theme_minimalism()
+plot2
 ```
 :::
 
@@ -188,7 +189,7 @@ plot3 <- plot2 +
                 aes(color="Critical Region"),
                 xlim= c(qnorm(.025, mean=50,sd=5, lower.tail=F),75)) +
     scale_colour_manual("Legend",values = c("Null Distribution" = "#b2df8a","Alternative Distribution"= "#a6cee3","Critical Region" ="#1f78b4"))
-ggplotly(plot3) |> layout(legend = list(x = 0.9, y = 0.9))
+plot3
 ```
 :::
 
@@ -205,9 +206,9 @@ To reject H~0~, our sample mean would need to fall within the critical region of
 ::: r-stack
 ```{r}
 #| fig-align: center
-ggplotly(plot3 +
+plot3 +
   geom_vline(xintercept=57, alpha=.5) + 
-  annotate("text",x=57,y=.05, label=paste0("Sample mean = 57"))) |> layout(legend = list(x = 0.9, y = 0.9))
+  annotate("text",x=57,y=.05, label=paste0("Sample mean = 57"))
 ```
 :::
 
@@ -234,7 +235,7 @@ This is an example of a false negative, or type II error.
 ::: r-stack
 ```{r}
 #| fig-align: center
-ggplotly(plot3 +
+plot3 +
     stat_function(fun=dnorm, # beta overlay
                 args=list(mean=55, sd=5),
                 geom="area",
@@ -245,7 +246,7 @@ ggplotly(plot3 +
       scale_colour_manual("Legend",values = c("Null Distribution" = "#b2df8a",
                                               "Alternative Distribution"= "#a6cee3",
                                               "Critical Region" ="#1f78b4",
-                                              "Beta" = "#fb9a99"))) |> layout(legend = list(x = 0.9, y = 0.9))
+                                              "Beta" = "#fb9a99"))
 ```
 :::
 
@@ -262,7 +263,7 @@ Sometimes this is called the *false negative rate*, or the probability of gettin
 ::: r-stack
 ```{r}
 #| fig-align: center
-ggplotly(plot3 +
+plot3 +
       stat_function(fun=dnorm, # power overlay
                 args=list(mean=55, sd=5),
                 geom="area",
@@ -273,7 +274,7 @@ ggplotly(plot3 +
       scale_colour_manual("Legend",values = c("Null Distribution" = "#b2df8a",
                                               "Alternative Distribution"= "#a6cee3",
                                               "Critical Region" ="#1f78b4",
-                                              "Power" = "#33a02c"))) |> layout(legend = list(x = 0.9, y = 0.9))
+                                              "Power" = "#33a02c"))
 ```
 :::
 
@@ -290,7 +291,7 @@ We can think of it along of the lines of "if we sampled from the population, wha
 ::: r-stack
 ```{r}
 #| fig-align: center
-ggplotly(plot4 <- ggplot(data=data.frame(x=c(35:65)),aes(x)) +
+plot4 <- ggplot(data=data.frame(x=c(35:65)),aes(x)) +
   stat_function(fun=dnorm,
                 args=list(mean=50, sd=5),
                 geom="area", 
@@ -345,7 +346,8 @@ ggplotly(plot4 <- ggplot(data=data.frame(x=c(35:65)),aes(x)) +
         scale_colour_manual("Legend",values = c("Null Distribution" = "#b2df8a",
                                               "Alternative Distribution"= "#a6cee3",
                                               "Critical Region" ="#1f78b4",
-                                              "Power" = "#33a02c"))) |> layout(legend = list(x = 0.9, y = 0.9)) 
+                                              "Power" = "#33a02c"))
+plot4
 ```
 :::
 
@@ -397,10 +399,10 @@ library(tibble)
 library(munsell)
 library(shiny)
 library(ggplot2)
-library(plotly)
+#library(plotly)
 
 ui <- fluidPage(
-  plotlyOutput("tailsPlot"),
+  plotOutput("tailsPlot"),
   radioButtons("tails", "Tails:",
                c("2 Tails" = "twotail",
                  "1 Tail (Upper)" = "onetail_upper",
@@ -420,7 +422,7 @@ server <- function(input, output) {
       axis.title=element_text(size=14,face="bold"))
   }
   
-  output$tailsPlot <- renderPlotly({
+  output$tailsPlot <- renderPlot({
       lower <- -4
       upper <- 6
       alpha <- .05
@@ -487,7 +489,7 @@ server <- function(input, output) {
                       else {
                         c(lower,qnorm(alpha))}) +
         #annotate("text",x=Inf,y=Inf, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
-        annotate("text",x=4,y=.5, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
+        annotate("text",x=1,y=.5, label = paste0("Power = ", round(power,3)), vjust = 1, size = unit(10, "pt")) +
         scale_x_continuous(limits=c(lower,upper),breaks= seq(round(lower),round(upper),by=1)) +
         #Clears the y-axis ticks
         scale_y_continuous(breaks=NULL) +
@@ -538,10 +540,10 @@ library(tibble)
 library(munsell)
 library(shiny)
 library(ggplot2)
-library(plotly)
+#library(plotly)
 
 ui <- fluidPage(
-  plotlyOutput(outputId = "effectsizePlot"),
+  plotOutput(outputId = "effectsizePlot"),
   sliderInput("mu", "Effect Size:",min=-4,max=4,value=1,step=.5)
 )
 
@@ -558,7 +560,7 @@ server <- function(input, output) {
       axis.title=element_text(size=14,face="bold"))
   }
   
-  output$effectsizePlot <- renderPlotly({
+  output$effectsizePlot <- renderPlot({
       lower <- -8
       upper <- 8
       mu <- 5
@@ -614,11 +616,11 @@ server <- function(input, output) {
                   xlim=c(lower,qnorm(alpha/2))) +
     #annotate("text",x=Inf,y=Inf, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
     annotate("text",
-             x=4,
+             x=0,
              y=.5, 
              label = paste0("Power = ", round(power,3)),
              vjust = 1, 
-             hjust = 1) +
+             size = unit(10, "pt")) +
     #Clears the y-axis label
     ylab("")+
     xlab("Well-Being Score")+
@@ -628,9 +630,9 @@ server <- function(input, output) {
     scale_y_continuous(breaks=NULL) +
     theme_minimalism()
     if(input$mu == 0) {
-      ggplotly(effectsize + annotate("text",x=0,y=.35, label = paste0("Note: When H0 is true, power no longer represents the \n chance of correctly rejecting H0 (because H0 is true, \n we can’t correctly reject it). Instead, it becomes our false-positive rate – the \n chance of incorrectly rejecting H0 (note this is our alpha value)."), size = 14/.pt))
+      effectsize + annotate("text",x=0,y=.35, label = paste0("Note: When H0 is true, power no longer represents the \n chance of correctly rejecting H0 (because H0 is true, \n we can’t correctly reject it). Instead, it becomes our false-positive rate – the \n chance of incorrectly rejecting H0 (note this is our alpha value)."), size = 14/.pt)
     } else {
-      ggplotly(effectsize)
+      effectsize
     }
   
   })
@@ -645,7 +647,7 @@ In this case, the effect size represents how far away the means of the two distr
 
 Try changing the effect size. What happens to power as the absolute value of the effect size increases?
 
-## Sample
+## Sample Size
 
 ```{shinylive-r}
 #| standalone: true
@@ -657,10 +659,10 @@ library(tibble)
 library(munsell)
 library(shiny)
 library(ggplot2)
-library(plotly)
+#library(plotly)
 
 ui <- fluidPage(
-  plotlyOutput("samplesizePlot"),
+  plotOutput("samplesizePlot"),
   sliderInput("sampSize", "Sample Size:",min=2,max=50,value=25,step=1)
 )
 
@@ -677,7 +679,7 @@ server <- function(input, output) {
       axis.title=element_text(size=14,face="bold"))
   }
   
-  output$samplesizePlot <- renderPlotly({
+  output$samplesizePlot <- renderPlot({
       lower <- -8
       upper <- 8
       mu <- 1
@@ -725,7 +727,7 @@ server <- function(input, output) {
                   alpha=.5,
                   xlim=c(qnorm(pnorm(-1.96*(se)), lower.tail=F),upper)) +
     #annotate("text",x=Inf,y=Inf, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
-    annotate("text",x=4,y=.5, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
+    annotate("text",x=5,y=.5, label = paste0("Power = ", round(power,3)), vjust = 1, size = unit(10, "pt")) +
     #Clears the y-axis label
     ylab("")+
     xlab("Well-Being Score")+
@@ -756,10 +758,10 @@ library(tibble)
 library(munsell)
 library(shiny)
 library(ggplot2)
-library(plotly)
+#library(plotly)
 
 ui <- fluidPage(
-  plotlyOutput("alphaPlot"),
+  plotOutput("alphaPlot"),
   sliderInput("alpha", "Alpha (α):",min=.01,max=.05,value=.05,step=.01)
 )
 
@@ -776,7 +778,7 @@ server <- function(input, output) {
       axis.title=element_text(size=14,face="bold"))
   }
   
-  output$alphaPlot <- renderPlotly({
+  output$alphaPlot <- renderPlot({
     lower <- -8
       upper <- 8
       mu <- 1
@@ -824,7 +826,7 @@ server <- function(input, output) {
                   alpha=.5,
                   xlim=c(qnorm(input$alpha/2,lower.tail=F),upper)) +
     #annotate("text",x=Inf,y=Inf, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
-    annotate("text",x=4,y=.5, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
+    annotate("text",x=0,y=.5, label = paste0("Power = ", round(power,3)), vjust = 1, size = unit(10, "pt")) +
     #Clears the y-axis label
     ylab("")+
     xlab("Well-Being Score")+
@@ -871,11 +873,11 @@ library(tibble)
 library(munsell)
 library(shiny)
 library(ggplot2)
-library(plotly)
+#library(plotly)
 library(bslib)
 
 ui <- fluidPage(
-plotlyOutput("aprioriPlot"),
+plotOutput("aprioriPlot"),
 layout_columns(
 sliderInput("alpha", "Alpha (α):",min=.01,max=.05,value=.01,step=.01),
 sliderInput("effectSize", "Effect Size (d):",min=.05,max=1.5,value=.75,step=.05),
@@ -899,7 +901,7 @@ theme_minimalism <- function(){
 output$sampleSize <- renderText({samp <- reactive({((qnorm(1-input$alpha/2)+qnorm(input$power))^2)/input$effectSize^2})
   round(samp(),0)})
 
-output$aprioriPlot <- renderPlotly({
+output$aprioriPlot <- renderPlot({
   lower <- -3
     upper <- 8
     es <- input$effectSize
@@ -946,7 +948,7 @@ ggplot(data=data.frame(x=c(lower,upper)),aes(x)) +
                 alpha=.5,
                 xlim=c(qnorm(input$alpha/2,lower.tail=F),upper)) +
   #annotate("text",x=Inf,y=Inf, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
-  annotate("text",x=2.5,y=.5, label = paste0("Required Sample Size = ", round(sampleSize(),0)), vjust = 1, hjust = 1, size = unit(7, "pt")) +
+  annotate("text",x=2,y=.5, label = paste0("Required Sample Size = ", round(sampleSize(),0)), vjust = 1, size = unit(10, "pt")) +
   #Clears the y-axis label
   ylab("")+
   xlab("Well-Being Score")+
@@ -960,3 +962,14 @@ ggplot(data=data.frame(x=c(lower,upper)),aes(x)) +
 
 shinyApp(ui, server)
 ```
+
+## Thank You!
+
+This concludes the module on statistical power.
+
+This module was made possible by the Small Grants for Teaching opportunity from the Association for Psychological Science (APS Fund for Teaching and Public Understanding of Psychological Science).
+
+Authors: Jeremy Rappel, Mira Saad, Carl F. Falk, Jens Kreitewolf
+
+Initial Evaluation: Domi Wong
+

@@ -1,5 +1,6 @@
 ---
 title: "Power Analysis"
+subtitle: "Use right or down arrow keys to advance"
 format: 
   revealjs:
     height: 800
@@ -9,10 +10,44 @@ filters:
 slide-number: true
 ---
 
+
+## Research Question
+
+```{=html}
+<!---- 
+######################################################################
+## Interactive Statistics Project - Module 2: Statistical Power
+##
+## We thank the Association for Psychological Science for a small
+## teaching grant to help in the development of this software.
+##
+## Copyright 2025-2026 Jeremy Rappel, Carl F. Falk, Mira Saad &
+##  Jens Kreitewolf
+##
+## This program is free software: you can redistribute it and/or
+## modify it under the terms of the GNU Affero General Public License as
+## published by the Free Software Foundation, either version 3 of
+## the License, or (at your option) any later version.
+##
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+## GNU Affero General Public License for more details.
+## <http://www.gnu.org/licenses/>
+##
+---->
+```
+
+
+## Research Question
+
+
 ```{r}
 library(ggplot2)
 library(shiny)
 library(plotly)
+library(tibble)
+library(munsell)
 
 theme_minimalism <- function(){
   theme_minimal() + # ggplot's minimal theme hides many unnecessary features of plot
@@ -27,15 +62,17 @@ theme_minimalism <- function(){
 }
 ```
 
-## Research Question {auto-animate="T"}
+<<<<<<< HEAD:index.qmd
 
+=======
+>>>>>>> 09fe4a0474fd44a461e1b81db622c4f57c7d2087:power.qmd
+::: {.fragment .fade-in fragment-index="1"}
 Let's say we're interested in studying the effect of meditation on well-being.
+:::
 
-## Research Question {auto-animate="T"}
-
-Let's say we're interested in studying the effect of meditation on well-being.
-
-We want to test if people who meditate have different well-being scores than the non-mediating population.
+::: {.fragment .fade-in fragment-index="2"}
+We want to test if people who meditate have different well-being scores than the non-meditating population.
+:::
 
 ## The Null Distribution {.smaller}
 
@@ -60,9 +97,13 @@ ggplotly(plot1) |> layout(legend = list(x = 0.9, y = 0.9))
 ```
 :::
 
-Let's say this is the sampling distribution of the non-mediating population (the **null sampling distribution**) for n=15.
+::: {.fragment .fade-in fragment-index="1"}
+Let's say this is the sampling distribution of the non-meditating population (the **null sampling distribution**) for n=15.
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 Let's say this sampling distribution has a mean score of 50 and a standard error of 5.
+:::
 
 ## The Null Distribution {.smaller}
 
@@ -82,7 +123,9 @@ ggplotly(plot1 +
 ```
 :::
 
+::: {.fragment .fade-in fragment-index="1"}
 If the null hypothesis (H~0~) were true (If meditation had no effect on well-being), the sampling distribution of the meditation (i.e. experimental) group would be identical to the non-meditation (i.e. control) group
+:::
 
 ## The Alternative Distribution {.smaller}
 
@@ -116,15 +159,21 @@ ggplotly(plot2 <- ggplot(data=data.frame(x=c(35:75)),aes(x)) +
 ```
 :::
 
-But, if the people who meditate have higher (or lower) well-being scores than the non-mediating population, then the alternative hypothesis (H~1~) would be true, and the two sampling distributions would be different.
+::: {.fragment .fade-in fragment-index="1"}
+But, if the people who meditate have higher (or lower) well-being scores than the non-meditating population, then the alternative hypothesis (H~1~) would be true, and the two sampling distributions would be different.
+:::
 
-::: r-stack
+:::: r-stack
+::: {.fragment .fade-in fragment-index="2"}
 H~0~: μ~Meditating~ = 0
 :::
+::::
 
-::: r-stack
+:::: r-stack
+::: {.fragment .fade-in fragment-index="2"}
 H~1~: μ~Meditating~ ≠ 0
 :::
+::::
 
 ## Sampling {.smaller}
 
@@ -151,9 +200,13 @@ ggplotly(plot3) |> layout(legend = list(x = 0.9, y = 0.9))
 ```
 :::
 
-Let's say the population mean of the meditation (i.e. experimental) group is 5 points higher than the population mean of the non-mediating (i.e. control) group.
+::: {.fragment .fade-in fragment-index="1"}
+Let's say the population mean of the meditation (i.e. experimental) group is 5 points higher than the population mean of the non-meditating (i.e. control) group.
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 To reject H~0~, our sample mean would need to fall within the critical region of the null distribution (here, alpha=.05, two-tailed).
+:::
 
 ## Sampling {.smaller}
 
@@ -166,17 +219,25 @@ ggplotly(plot3 +
 ```
 :::
 
-Let's say we sample from the meditating population and get a sample mean of 57
+::: {.fragment .fade-in fragment-index="1"}
+Let's say we sample from the meditating population and get a sample mean of 57.
+:::
 
 ## Sampling {.smaller}
 
+::: {.fragment .fade-in fragment-index="1"}
 In this case, our sample mean does not fall within the critical region of the null distribution, so we would fail to reject H0.
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 But, there is a true difference between the groups in the population.
+:::
 
-This is an example of a false negative, or Type II error.
+::: {.fragment .fade-in fragment-index="3"}
+This is an example of a false negative, or type II error.
+:::
 
-## Statistical Power {.smaller}
+## Statistical Power
 
 ::: r-stack
 ```{r}
@@ -196,9 +257,13 @@ ggplotly(plot3 +
 ```
 :::
 
+::: {.fragment .fade-in fragment-index="1"}
 The region of the alternative distribution that overlaps with the non-critical region of the null distribution is *beta* (β).
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 Sometimes this is called the *false negative rate*, or the probability of getting a Type II error.
+:::
 
 ## Statistical Power {.smaller}
 
@@ -220,9 +285,13 @@ ggplotly(plot3 +
 ```
 :::
 
+::: {.fragment .fade-in fragment-index="1"}
 1 -β , then, is our *statistical power*. Sometimes it's called the *true positive rate*.
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 We can think of it along of the lines of "if we sampled from the population, what's the probability of us (correctly) rejecting H~0~?"
+:::
 
 ## A Special Case: H~0~ is true {.smaller}
 
@@ -288,29 +357,43 @@ ggplotly(plot4 <- ggplot(data=data.frame(x=c(35:65)),aes(x)) +
 ```
 :::
 
+::: {.fragment .fade-in fragment-index="1"}
 However, if H~0~ is true, then things change. We can't *correctly* reject H~0~, but we can still get a significant result if our sample mean falls within the critical region.
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 This would be a false positive, or an incorrect rejection.
+:::
 
+::: {.fragment .fade-in fragment-index="3"}
 Because the size of the critical region is determined by α, we sometimes call α the *False Positive Rate*.
+:::
 
 ## Possible Outcomes {.smaller}
 
+::: {.fragment .fade-in fragment-index="1"}
 Thus, we have 4 possible outcomes of a null-hypothesis significance test:
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 |   | H~0~ is True \n (in the Population) | H~0~ is False \n (In the population) |
-|------------------------|------------------------|-----------------------:|
+|----|----|---:|
 | Retain H~0~ | Correct Retention | False Negative (Type II Error) |
 | Reject H~0~ | False Positive (Type I error) | Correct Rejection |
+:::
 
+::: {.fragment .fade-in fragment-index="3"}
 We can represent the probabilities of each of these outcomes with α and β
 
 |   | H~0~ is True \n (in the Population) | H~0~ is False \n (In the population) |
-|------------------------|------------------------|-----------------------:|
+|----|----|---:|
 | Retain H~0~ | 1-α | β |
 | Reject H~0~ | α | 1-β |
+:::
 
 ## Two-Tailed Vs. One-Tailed {.smaller}
+
+The prior examples were for a two-tailed test. What happens if we change to a one-tailed test?
 
 ```{shinylive-r}
 #| standalone: true
@@ -435,49 +518,21 @@ server <- function(input, output) {
 shinyApp(ui, server)
 ```
 
-<!-- :::::::: question -->
-
-<!-- The prior examples were for a two-tailed test. What happens if we change to a one-tailed test? -->
-
-<!-- ::::::: choices -->
-
-<!-- ::: choice -->
-
-<!-- The critical region becomes smaller, increasing power. -->
-
-<!-- ::: -->
-
-<!-- ::: {.choice .correct-choice} -->
-
-<!-- The critical region becomes larger, increasing power. -->
-
-<!-- ::: -->
-
-<!-- ::: choice -->
-
-<!-- The critical region becomes smaller, decreasing power. -->
-
-<!-- ::: -->
-
-<!-- ::: choice -->
-
-<!-- The critical region becomes larger, descreasing power. -->
-
-<!-- ::: -->
-
-<!-- ::::::: -->
-
-<!-- :::::::: -->
-
 ## Power
 
 Statistical power is affected by:
 
+::: {.fragment .fade-in fragment-index="1"}
 -   Our (population) effect size
+:::
 
+::: {.fragment .fade-in fragment-index="2"}
 -   Our sample size
+:::
 
+::: {.fragment .fade-in fragment-index="3"}
 -   Our chosen alpha value
+:::
 
 ## (Population) Effect Size {.smaller}
 
@@ -485,7 +540,7 @@ Statistical power is affected by:
 #| standalone: true
 #| panel: fill
 #| fig-align: center
-#| viewerHeight: 550
+#| viewerHeight: 500
 
 library(tibble)
 library(munsell)
@@ -594,11 +649,11 @@ shinyApp(ui, server)
 
 In this case, the effect size represents how far away the means of the two distributions are, in standard deviations.
 
-<!-- (or, how much of a difference there is between the mediating and non-mediating populations). -->
+<!-- (or, how much of a difference there is between the meditating and non-meditating populations). -->
 
 Try changing the effect size. What happens to power as the absolute value of the effect size increases?
 
-## Sample {.smaller}
+## Sample
 
 ```{shinylive-r}
 #| standalone: true
@@ -696,7 +751,7 @@ shinyApp(ui, server)
 
 Try changing the sample size. What happens to power as the sample size increases?
 
-## Alpha Value {.smaller}
+## Alpha Value
 
 
 ```{shinylive-r}
@@ -795,46 +850,48 @@ shinyApp(ui, server)
 
 Try adjusting the alpha value. What happens to power as alpha decreases?
 
-## A-Priori Power Analysis
+## Power Analysis for Sample Size [^1]
 
-So far, we've seen examples of *post-hoc* power analysis, where we assess achieved power after a study if finished.
+::: {.fragment .fade-in fragment-index="1"}
+A common use for power analysis is to determine what sample size we'll need to find a hypothesized effect before starting a study.
+:::
 
-Another use is *A-Priori* power analysis, which lets us determine what sample size we'll need to find a hypothesized effect before collecting data.
+[^1]: Sometimes called *a-priori* power analysis
 
-## A-Priori Power Analysis {.smaller}
+::: {.fragment .fade-in fragment-index="2"}
+Let's say we're planning a study to assess if the well-being scores of recent graduates is different from the general population.
+:::
+
+
+## Power Analysis for Sample Size {.smaller}
 
 Let's say we're planning a study to assess if the well-being scores of recent graduates is different from the general population.
 
 Let's also assume similar research finds a typical effect size of d=.5. Assuming α=.05 (two-tailed), what sample size would we need to have a power of at least .8?
 
-```{r, eval=FALSE}
+```{shinylive-r}
+#| standalone: true
 #| panel: fill
-plotlyOutput("aprioriPlot")
-```
+#| fig-align: center
+#| viewerHeight: 550
 
-:::::: {layout="[0.33, 0.33, 0.33]"}
-::: {.column width="100%"}
-```{r, eval=FALSE}
-sliderInput("alpha", "Alpha (α):",min=.01,max=.05,value=.01,step=.01)
-```
-:::
-
-::: {.column width="100%"}
-```{r, eval=FALSE}
-sliderInput("effectSize", "Effect Size (d):",min=.01,max=2,value=1,step=.01)
-```
-:::
-
-::: {.column width="100%"}
-```{r, eval=FALSE}
-sliderInput("power", "Power (1 - β):",min=.01,max=.99,value=.95,step=.01)
-```
-:::
-::::::
-
-```{r, eval=FALSE}
-#| context: server
+library(tibble)
+library(munsell)
+library(shiny)
+library(ggplot2)
 library(plotly)
+library(bslib)
+
+ui <- fluidPage(
+plotlyOutput("aprioriPlot"),
+layout_columns(
+sliderInput("alpha", "Alpha (α):",min=.01,max=.05,value=.01,step=.01),
+sliderInput("effectSize", "Effect Size (d):",min=.05,max=1.5,value=.75,step=.05),
+sliderInput("power", "Power (1 - β):",min=.01,max=.99,value=.95,step=.05)))
+#p(textOutput("sampleSize"), style="size:16"))
+
+server <- function(input,output) {
+  
 theme_minimalism <- function(){
   theme_minimal() + # ggplot's minimal theme hides many unnecessary features of plot
   theme(            # make modifications to the theme
@@ -846,6 +903,9 @@ theme_minimalism <- function(){
     axis.text=element_text(size=12),
     axis.title=element_text(size=14,face="bold"))
 }
+
+output$sampleSize <- renderText({samp <- reactive({((qnorm(1-input$alpha/2)+qnorm(input$power))^2)/input$effectSize^2})
+  round(samp(),0)})
 
 output$aprioriPlot <- renderPlotly({
   lower <- -3
@@ -894,7 +954,7 @@ ggplot(data=data.frame(x=c(lower,upper)),aes(x)) +
                 alpha=.5,
                 xlim=c(qnorm(input$alpha/2,lower.tail=F),upper)) +
   #annotate("text",x=Inf,y=Inf, label = paste0("Power = ", round(power,3)), vjust = 1, hjust = 1) +
-  annotate("text",x=4,y=.5, label = paste0("Required Sample Size = ", round(sampleSize(),0)), vjust = 1, hjust = 1) +
+  annotate("text",x=2.5,y=.5, label = paste0("Required Sample Size = ", round(sampleSize(),0)), vjust = 1, hjust = 1, size = unit(7, "pt")) +
   #Clears the y-axis label
   ylab("")+
   xlab("Well-Being Score")+
@@ -904,5 +964,7 @@ ggplot(data=data.frame(x=c(lower,upper)),aes(x)) +
   scale_y_continuous(breaks=NULL) +
   theme_minimalism()
   
-})
+})}
+
+shinyApp(ui, server)
 ```
